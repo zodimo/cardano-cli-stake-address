@@ -55,15 +55,18 @@ export class StakeAddress {
   }
 
   // registration-certificate
-
-  registrationCertificate(options: RegistrationCertificateOptions): RegistrationCertificate {
-    return new RegistrationCertificate(this.commandPrefix, options);
-  }
-
-  registrationCertificateBuilder(
+  registrationCertificate(
     builder: Builder<RegistrationCertificateOptions, RegistrationCertificateOptions>,
+  ): RegistrationCertificate;
+  registrationCertificate(options: RegistrationCertificateOptions): RegistrationCertificate;
+  registrationCertificate(
+    value: RegistrationCertificateOptions | Builder<RegistrationCertificateOptions, RegistrationCertificateOptions>,
   ): RegistrationCertificate {
-    const options = builder(new RegistrationCertificateOptions());
+    if (value instanceof RegistrationCertificateOptions) {
+      return new RegistrationCertificate(this.commandPrefix, value);
+    }
+
+    const options = value(new RegistrationCertificateOptions());
     return this.registrationCertificate(options);
   }
 

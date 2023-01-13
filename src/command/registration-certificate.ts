@@ -5,12 +5,13 @@ import {
   CompositeCommandParameter,
   OutFile,
   OutFileBuilder,
+  StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
 
 export enum StakeComponents {
   VERIFICATION_KEY = 'stake-verification-key',
   VERIFICATION_KEY_FILE = 'stake-verification-key-file',
-  SCRIPT_FILE = 'script-file',
+  SCRIPT_FILE = 'stake-script-file',
 }
 
 export class StakeComponentBuilder {
@@ -25,7 +26,7 @@ export class StakeComponentBuilder {
   }
 }
 
-export class StakeComponent extends CompositeCommandParameter {
+export class StakeComponent extends StringCommandParameter {
   constructor(paramKey: StakeComponents, paramValue: string) {
     super(paramKey, paramValue);
   }
@@ -43,23 +44,28 @@ export class RegistrationCertificateOptions implements CommandOptions {
   private stakeComponent?: StakeComponent;
   private outFile?: OutFile;
 
-  withStakeComponent(value: StakeComponent): RegistrationCertificateOptions {
-    this.stakeComponent = value;
+  withStakeComponent(builder: Builder<StakeComponentBuilder, StakeComponent>): RegistrationCertificateOptions;
+  withStakeComponent(value: StakeComponent): RegistrationCertificateOptions;
+  withStakeComponent(
+    value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
+  ): RegistrationCertificateOptions {
+    if (value instanceof StakeComponent) {
+      this.stakeComponent = value;
+      return this;
+    }
+
+    this.stakeComponent = value(new StakeComponentBuilder());
     return this;
   }
 
-  withStakeComponentBuilder(builder: Builder<StakeComponentBuilder, StakeComponent>): RegistrationCertificateOptions {
-    this.stakeComponent = builder(new StakeComponentBuilder());
-    return this;
-  }
-
-  withOutFile(value: OutFile): RegistrationCertificateOptions {
-    this.outFile = value;
-    return this;
-  }
-
-  withOutFileBuilder(builder: Builder<OutFileBuilder, OutFile>): RegistrationCertificateOptions {
-    this.outFile = builder(new OutFileBuilder());
+  withOutFile(builder: Builder<OutFileBuilder, OutFile>): RegistrationCertificateOptions;
+  withOutFile(value: OutFile): RegistrationCertificateOptions;
+  withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): RegistrationCertificateOptions {
+    if (value instanceof OutFile) {
+      this.outFile = value;
+      return this;
+    }
+    this.outFile = value(new OutFileBuilder());
     return this;
   }
 

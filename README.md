@@ -33,9 +33,9 @@ Usage: cardano-cli stake-address
 
 - [ ] stake-address
 
-  - [ ] key-gen
-  - [ ] key-hash
-  - [ ] build
-  - [ ] registration-certificate
+  - [x] key-gen
+  - [x] key-hash
+  - [x] build
+  - [X] registration-certificate
   - [ ] deregistration-certificate
   - [ ] delegation-certificate
