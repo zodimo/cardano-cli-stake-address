@@ -1,28 +1,31 @@
 import { Builder } from '@zodimo/cardano-cli-base';
-import { Build, BuildOptions } from './stake-address/build';
-import { DelegationCertificate, DelegationCertificateOptions } from './stake-address/delegation-certificate';
-import {
-  DeregistrationCertificate,
-  DeregistrationCertificateOptions,
-} from './stake-address/deregistration-certificate';
-import { KeyGen, KeyGenOptions } from './stake-address/key-gen';
-import { KeyHash, KeyHashOptions } from './stake-address/key-hash';
-import { RegistrationCertificate, RegistrationCertificateOptions } from './stake-address/registration-certificate';
+import { Build, BuildOptions } from './command/build';
+import { DelegationCertificate, DelegationCertificateOptions } from './command/delegation-certificate';
+import { DeregistrationCertificate, DeregistrationCertificateOptions } from './command/deregistration-certificate';
+import { KeyGen, KeyGenOptions } from './command/key-gen';
+import { KeyHash, KeyHashOptions } from './command/key-hash';
+import { RegistrationCertificate, RegistrationCertificateOptions } from './command/registration-certificate';
 
 export class StakeAddress {
-  private commandPrefix: string;
+  public readonly commandPrefix: string;
   constructor(commandPrefix: string) {
     this.commandPrefix = `${commandPrefix} stake-address`;
   }
 
-  // key-gen
-
-  keyGen(options: KeyGenOptions): KeyGen {
-    return new KeyGen(this.commandPrefix, options);
+  static createWithCardanoCliBin(cardniCliBinPath = 'cardano-cli'): StakeAddress {
+    return new StakeAddress(cardniCliBinPath);
   }
 
-  keyGenBuilder(builder: Builder<KeyGenOptions, KeyGenOptions>): KeyGen {
-    const options = builder(new KeyGenOptions());
+  // key-gen
+
+  keyGen(builder: Builder<KeyGenOptions, KeyGenOptions>): KeyGen;
+  keyGen(options: KeyGenOptions): KeyGen;
+  keyGen(value: KeyGenOptions | Builder<KeyGenOptions, KeyGenOptions>): KeyGen {
+    if (value instanceof KeyGenOptions) {
+      return new KeyGen(this.commandPrefix, value);
+    }
+
+    const options = value(new KeyGenOptions());
     return this.keyGen(options);
   }
 
