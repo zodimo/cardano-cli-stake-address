@@ -31,11 +31,11 @@ Usage: cardano-cli stake-address
 
 - Implementations
 
-- [ ] stake-address
+- [x] stake-address
 
   - [x] key-gen
   - [x] key-hash
   - [x] build
   - [X] registration-certificate
   - [x] deregistration-certificate
-  - [ ] delegation-certificate
+  - [x] delegation-certificate
