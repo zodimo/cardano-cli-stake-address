@@ -10,7 +10,7 @@ import {
 export enum StakeComponents {
   VERIFICATION_KEY = 'stake-verification-key',
   VERIFICATION_KEY_FILE = 'stake-verification-key-file',
-  SCRIPT_FILE = 'script-file',
+  SCRIPT_FILE = 'stake-script-file',
 }
 
 export class StakeComponentBuilder {
@@ -43,23 +43,28 @@ export class DeregistrationCertificateOptions implements CommandOptions {
   private stakeComponent?: StakeComponent;
   private outFile?: OutFile;
 
-  withStakeComponent(value: StakeComponent): DeregistrationCertificateOptions {
-    this.stakeComponent = value;
+  withStakeComponent(builder: Builder<StakeComponentBuilder, StakeComponent>): DeregistrationCertificateOptions;
+  withStakeComponent(value: StakeComponent): DeregistrationCertificateOptions;
+  withStakeComponent(
+    value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
+  ): DeregistrationCertificateOptions {
+    if (value instanceof StakeComponent) {
+      this.stakeComponent = value;
+      return this;
+    }
+
+    this.stakeComponent = value(new StakeComponentBuilder());
     return this;
   }
 
-  withStakeComponentBuilder(builder: Builder<StakeComponentBuilder, StakeComponent>): DeregistrationCertificateOptions {
-    this.stakeComponent = builder(new StakeComponentBuilder());
-    return this;
-  }
-
-  withOutFile(value: OutFile): DeregistrationCertificateOptions {
-    this.outFile = value;
-    return this;
-  }
-
-  withOutFileBuilder(builder: Builder<OutFileBuilder, OutFile>): DeregistrationCertificateOptions {
-    this.outFile = builder(new OutFileBuilder());
+  withOutFile(builder: Builder<OutFileBuilder, OutFile>): DeregistrationCertificateOptions;
+  withOutFile(value: OutFile): DeregistrationCertificateOptions;
+  withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): DeregistrationCertificateOptions {
+    if (value instanceof OutFile) {
+      this.outFile = value;
+      return this;
+    }
+    this.outFile = value(new OutFileBuilder());
     return this;
   }
 

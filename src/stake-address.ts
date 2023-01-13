@@ -72,27 +72,37 @@ export class StakeAddress {
 
   // deregistration-certificate
 
-  deregistrationCertificate(options: DeregistrationCertificateOptions): DeregistrationCertificate {
-    return new DeregistrationCertificate(this.commandPrefix, options);
-  }
-
-  deregistrationCertificateBuilder(
+  deregistrationCertificate(
     builder: Builder<DeregistrationCertificateOptions, DeregistrationCertificateOptions>,
+  ): DeregistrationCertificate;
+  deregistrationCertificate(options: DeregistrationCertificateOptions): DeregistrationCertificate;
+  deregistrationCertificate(
+    value:
+      | DeregistrationCertificateOptions
+      | Builder<DeregistrationCertificateOptions, DeregistrationCertificateOptions>,
   ): DeregistrationCertificate {
-    const options = builder(new DeregistrationCertificateOptions());
+    if (value instanceof DeregistrationCertificateOptions) {
+      return new DeregistrationCertificate(this.commandPrefix, value);
+    }
+
+    const options = value(new DeregistrationCertificateOptions());
     return this.deregistrationCertificate(options);
   }
 
   // delegation-certificate
 
-  delegationCertificate(options: DelegationCertificateOptions): DelegationCertificate {
-    return new DelegationCertificate(this.commandPrefix, options);
-  }
-
-  delegationCertificateBuilder(
+  delegationCertificate(
     builder: Builder<DelegationCertificateOptions, DelegationCertificateOptions>,
+  ): DelegationCertificate;
+  delegationCertificate(options: DelegationCertificateOptions): DelegationCertificate;
+  delegationCertificate(
+    value: DelegationCertificateOptions | Builder<DelegationCertificateOptions, DelegationCertificateOptions>,
   ): DelegationCertificate {
-    const options = builder(new DelegationCertificateOptions());
+    if (value instanceof DelegationCertificateOptions) {
+      return new DelegationCertificate(this.commandPrefix, value);
+    }
+
+    const options = value(new DelegationCertificateOptions());
     return this.delegationCertificate(options);
   }
 }

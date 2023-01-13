@@ -2,7 +2,6 @@ import {
   Builder,
   Command,
   CommandOptions,
-  CompositeCommandParameter,
   OutFile,
   OutFileBuilder,
   StringCommandParameter,
