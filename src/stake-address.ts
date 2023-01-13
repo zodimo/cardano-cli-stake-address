@@ -31,12 +31,14 @@ export class StakeAddress {
 
   // build
 
-  build(options: BuildOptions): Build {
-    return new Build(this.commandPrefix, options);
-  }
+  build(builder: Builder<BuildOptions, BuildOptions>): Build;
+  build(options: BuildOptions): Build;
+  build(value: BuildOptions | Builder<BuildOptions, BuildOptions>): Build {
+    if (value instanceof BuildOptions) {
+      return new Build(this.commandPrefix, value);
+    }
 
-  buildBuilder(builder: Builder<BuildOptions, BuildOptions>): Build {
-    const options = builder(new BuildOptions());
+    const options = value(new BuildOptions());
     return this.build(options);
   }
 

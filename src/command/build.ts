@@ -12,7 +12,7 @@ import {
 export enum StakeComponents {
   VERIFICATION_KEY = 'stake-verification-key',
   VERIFICATION_KEY_FILE = 'stake-verification-key-file',
-  SCRIPT_FILE = 'script-file',
+  SCRIPT_FILE = 'stake-script-file',
 }
 
 export class StakeComponentBuilder {
@@ -47,33 +47,38 @@ export class BuildOptions implements CommandOptions {
   private network?: Network;
   private outFile?: OutFile;
 
-  withStakeComponent(value: StakeComponent): BuildOptions {
-    this.stakeComponent = value;
+  withStakeComponent(builder: Builder<StakeComponentBuilder, StakeComponent>): BuildOptions;
+  withStakeComponent(value: StakeComponent): BuildOptions;
+  withStakeComponent(value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>): BuildOptions {
+    if (value instanceof StakeComponent) {
+      this.stakeComponent = value;
+      return this;
+    }
+
+    this.stakeComponent = value(new StakeComponentBuilder());
     return this;
   }
 
-  withStakeComponentBuilder(builder: Builder<StakeComponentBuilder, StakeComponent>): BuildOptions {
-    this.stakeComponent = builder(new StakeComponentBuilder());
+  withNetwork(builder: Builder<NetworkBuilder, Network>): BuildOptions;
+  withNetwork(value: Network): BuildOptions;
+  withNetwork(value: Network | Builder<NetworkBuilder, Network>): BuildOptions {
+    if (value instanceof Network) {
+      this.network = value;
+      return this;
+    }
+
+    this.network = value(new NetworkBuilder());
     return this;
   }
 
-  withNetwork(value: Network): BuildOptions {
-    this.network = value;
-    return this;
-  }
-
-  withNetworkBuilder(builder: Builder<NetworkBuilder, Network>): BuildOptions {
-    this.network = builder(new NetworkBuilder());
-    return this;
-  }
-
-  withOutFile(value: OutFile): BuildOptions {
-    this.outFile = value;
-    return this;
-  }
-
-  withOutFileBuilder(builder: Builder<OutFileBuilder, OutFile>): BuildOptions {
-    this.outFile = builder(new OutFileBuilder());
+  withOutFile(builder: Builder<OutFileBuilder, OutFile>): BuildOptions;
+  withOutFile(value: OutFile): BuildOptions;
+  withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): BuildOptions {
+    if (value instanceof OutFile) {
+      this.outFile = value;
+      return this;
+    }
+    this.outFile = value(new OutFileBuilder());
     return this;
   }
 
