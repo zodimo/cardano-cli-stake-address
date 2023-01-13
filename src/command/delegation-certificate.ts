@@ -10,7 +10,7 @@ import {
 export enum StakeComponents {
   VERIFICATION_KEY = 'stake-verification-key',
   VERIFICATION_KEY_FILE = 'stake-verification-key-file',
-  SCRIPT_FILE = 'script-file',
+  SCRIPT_FILE = 'stake-script-file',
 }
 
 export class StakeComponentBuilder {
@@ -78,35 +78,42 @@ export class DelegationCertificateOptions implements CommandOptions {
   private stakePoolComponent?: StakePoolComponent;
   private outFile?: OutFile;
 
-  withStakeComponent(value: StakeComponent): DelegationCertificateOptions {
-    this.stakeComponent = value;
-    return this;
-  }
-
-  withStakeComponentBuilder(builder: Builder<StakeComponentBuilder, StakeComponent>): DelegationCertificateOptions {
-    this.stakeComponent = builder(new StakeComponentBuilder());
-    return this;
-  }
-
-  withStakePoolComponent(value: StakePoolComponent): DelegationCertificateOptions {
-    this.stakePoolComponent = value;
-    return this;
-  }
-
-  withStakePoolComponentBuilder(
-    builder: Builder<StakePoolComponentBuilder, StakePoolComponent>,
+  withStakeComponent(builder: Builder<StakeComponentBuilder, StakeComponent>): DelegationCertificateOptions;
+  withStakeComponent(value: StakeComponent): DelegationCertificateOptions;
+  withStakeComponent(
+    value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
   ): DelegationCertificateOptions {
-    this.stakePoolComponent = builder(new StakePoolComponentBuilder());
+    if (value instanceof StakeComponent) {
+      this.stakeComponent = value;
+      return this;
+    }
+
+    this.stakeComponent = value(new StakeComponentBuilder());
     return this;
   }
 
-  withOutFile(value: OutFile): DelegationCertificateOptions {
-    this.outFile = value;
+  withStakePoolComponent(builder: Builder<StakePoolComponentBuilder, StakePoolComponent>): DelegationCertificateOptions;
+  withStakePoolComponent(value: StakePoolComponent): DelegationCertificateOptions;
+  withStakePoolComponent(
+    value: StakePoolComponent | Builder<StakePoolComponentBuilder, StakePoolComponent>,
+  ): DelegationCertificateOptions {
+    if (value instanceof StakePoolComponent) {
+      this.stakePoolComponent = value;
+      return this;
+    }
+
+    this.stakePoolComponent = value(new StakePoolComponentBuilder());
     return this;
   }
 
-  withOutFileBuilder(builder: Builder<OutFileBuilder, OutFile>): DelegationCertificateOptions {
-    this.outFile = builder(new OutFileBuilder());
+  withOutFile(builder: Builder<OutFileBuilder, OutFile>): DelegationCertificateOptions;
+  withOutFile(value: OutFile): DelegationCertificateOptions;
+  withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): DelegationCertificateOptions {
+    if (value instanceof OutFile) {
+      this.outFile = value;
+      return this;
+    }
+    this.outFile = value(new OutFileBuilder());
     return this;
   }
 
