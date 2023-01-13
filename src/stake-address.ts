@@ -41,13 +41,14 @@ export class StakeAddress {
   }
 
   // key-hash
+  keyHash(builder: Builder<KeyHashOptions, KeyHashOptions>): KeyHash;
+  keyHash(options: KeyHashOptions): KeyHash;
+  keyHash(value: KeyHashOptions | Builder<KeyHashOptions, KeyHashOptions>): KeyHash {
+    if (value instanceof KeyHashOptions) {
+      return new KeyHash(this.commandPrefix, value);
+    }
 
-  keyHash(options: KeyHashOptions): KeyHash {
-    return new KeyHash(this.commandPrefix, options);
-  }
-
-  keyHashBuilder(builder: Builder<KeyHashOptions, KeyHashOptions>): KeyHash {
-    const options = builder(new KeyHashOptions());
+    const options = value(new KeyHashOptions());
     return this.keyHash(options);
   }
 

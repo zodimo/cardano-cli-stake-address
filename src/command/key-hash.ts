@@ -39,23 +39,28 @@ export class KeyHashOptions implements CommandOptions {
   private stakeVerificationKey?: StakeVerificationKey;
   private outFile?: OutFile;
 
-  withStakeVerificationKey(value: StakeVerificationKey): KeyHashOptions {
-    this.stakeVerificationKey = value;
+  withStakeVerificationKey(builder: Builder<StakeVerificationKeyFactory, StakeVerificationKey>): KeyHashOptions;
+  withStakeVerificationKey(value: StakeVerificationKey): KeyHashOptions;
+  withStakeVerificationKey(
+    value: StakeVerificationKey | Builder<StakeVerificationKeyFactory, StakeVerificationKey>,
+  ): KeyHashOptions {
+    if (value instanceof StakeVerificationKey) {
+      this.stakeVerificationKey = value;
+      return this;
+    }
+
+    this.stakeVerificationKey = value(new StakeVerificationKeyFactory());
     return this;
   }
 
-  withStakeVerificationKeyBuilder(builder: Builder<StakeVerificationKeyFactory, StakeVerificationKey>): KeyHashOptions {
-    this.stakeVerificationKey = builder(new StakeVerificationKeyFactory());
-    return this;
-  }
-
-  withOutFile(value: OutFile): KeyHashOptions {
-    this.outFile = value;
-    return this;
-  }
-
-  withOutFileBuilder(builder: Builder<OutFileBuilder, OutFile>): KeyHashOptions {
-    this.outFile = builder(new OutFileBuilder());
+  withOutFile(builder: Builder<OutFileBuilder, OutFile>): KeyHashOptions;
+  withOutFile(value: OutFile): KeyHashOptions;
+  withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): KeyHashOptions {
+    if (value instanceof OutFile) {
+      this.outFile = value;
+      return this;
+    }
+    this.outFile = value(new OutFileBuilder());
     return this;
   }
 

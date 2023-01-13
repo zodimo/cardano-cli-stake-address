@@ -1,6 +1,6 @@
 import { StakeAddress } from '../../src/stake-address';
 
-describe('cardano-cli syake-address key-gen', () => {
+describe('cardano-cli stake-address key-gen', () => {
   /*
   Usage: cardano-cli stake-address key-gen --verification-key-file FILE
             --signing-key-file FILE
