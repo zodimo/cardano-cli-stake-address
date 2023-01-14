@@ -10,7 +10,7 @@ export class RegistrationCertificateOptions implements CommandOptions {
   withStakeComponent(
     value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
   ): RegistrationCertificateOptions {
-    if (value instanceof StakeComponent) {
+    if (typeof value !== 'function') {
       this.stakeComponent = value;
       return this;
     }
@@ -22,7 +22,7 @@ export class RegistrationCertificateOptions implements CommandOptions {
   withOutFile(builder: Builder<OutFileBuilder, OutFile>): RegistrationCertificateOptions;
   withOutFile(value: OutFile): RegistrationCertificateOptions;
   withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): RegistrationCertificateOptions {
-    if (value instanceof OutFile) {
+    if (typeof value !== 'function') {
       this.outFile = value;
       return this;
     }

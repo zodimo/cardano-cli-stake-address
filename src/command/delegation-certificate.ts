@@ -51,7 +51,7 @@ export class DelegationCertificateOptions implements CommandOptions {
   withStakeComponent(
     value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
   ): DelegationCertificateOptions {
-    if (value instanceof StakeComponent) {
+    if (typeof value !== 'function') {
       this.stakeComponent = value;
       return this;
     }
@@ -65,7 +65,7 @@ export class DelegationCertificateOptions implements CommandOptions {
   withStakePoolComponent(
     value: StakePoolComponent | Builder<StakePoolComponentBuilder, StakePoolComponent>,
   ): DelegationCertificateOptions {
-    if (value instanceof StakePoolComponent) {
+    if (typeof value !== 'function') {
       this.stakePoolComponent = value;
       return this;
     }
@@ -77,7 +77,7 @@ export class DelegationCertificateOptions implements CommandOptions {
   withOutFile(builder: Builder<OutFileBuilder, OutFile>): DelegationCertificateOptions;
   withOutFile(value: OutFile): DelegationCertificateOptions;
   withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): DelegationCertificateOptions {
-    if (value instanceof OutFile) {
+    if (typeof value !== 'function') {
       this.outFile = value;
       return this;
     }

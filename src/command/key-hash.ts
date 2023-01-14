@@ -44,7 +44,7 @@ export class KeyHashOptions implements CommandOptions {
   withStakeVerificationKey(
     value: StakeVerificationKey | Builder<StakeVerificationKeyFactory, StakeVerificationKey>,
   ): KeyHashOptions {
-    if (value instanceof StakeVerificationKey) {
+    if (typeof value !== 'function') {
       this.stakeVerificationKey = value;
       return this;
     }
@@ -56,7 +56,7 @@ export class KeyHashOptions implements CommandOptions {
   withOutFile(builder: Builder<OutFileBuilder, OutFile>): KeyHashOptions;
   withOutFile(value: OutFile): KeyHashOptions;
   withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): KeyHashOptions {
-    if (value instanceof OutFile) {
+    if (typeof value !== 'function') {
       this.outFile = value;
       return this;
     }

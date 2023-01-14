@@ -21,7 +21,7 @@ export class StakeAddress {
   keyGen(builder: Builder<KeyGenOptions, KeyGenOptions>): KeyGen;
   keyGen(options: KeyGenOptions): KeyGen;
   keyGen(value: KeyGenOptions | Builder<KeyGenOptions, KeyGenOptions>): KeyGen {
-    if (value instanceof KeyGenOptions) {
+    if (typeof value !== 'function') {
       return new KeyGen(this.commandPrefix, value);
     }
 
@@ -34,7 +34,7 @@ export class StakeAddress {
   build(builder: Builder<BuildOptions, BuildOptions>): Build;
   build(options: BuildOptions): Build;
   build(value: BuildOptions | Builder<BuildOptions, BuildOptions>): Build {
-    if (value instanceof BuildOptions) {
+    if (typeof value !== 'function') {
       return new Build(this.commandPrefix, value);
     }
 
@@ -46,7 +46,7 @@ export class StakeAddress {
   keyHash(builder: Builder<KeyHashOptions, KeyHashOptions>): KeyHash;
   keyHash(options: KeyHashOptions): KeyHash;
   keyHash(value: KeyHashOptions | Builder<KeyHashOptions, KeyHashOptions>): KeyHash {
-    if (value instanceof KeyHashOptions) {
+    if (typeof value !== 'function') {
       return new KeyHash(this.commandPrefix, value);
     }
 
@@ -62,7 +62,7 @@ export class StakeAddress {
   registrationCertificate(
     value: RegistrationCertificateOptions | Builder<RegistrationCertificateOptions, RegistrationCertificateOptions>,
   ): RegistrationCertificate {
-    if (value instanceof RegistrationCertificateOptions) {
+    if (typeof value !== 'function') {
       return new RegistrationCertificate(this.commandPrefix, value);
     }
 
@@ -81,7 +81,7 @@ export class StakeAddress {
       | DeregistrationCertificateOptions
       | Builder<DeregistrationCertificateOptions, DeregistrationCertificateOptions>,
   ): DeregistrationCertificate {
-    if (value instanceof DeregistrationCertificateOptions) {
+    if (typeof value !== 'function') {
       return new DeregistrationCertificate(this.commandPrefix, value);
     }
 
@@ -98,7 +98,7 @@ export class StakeAddress {
   delegationCertificate(
     value: DelegationCertificateOptions | Builder<DelegationCertificateOptions, DelegationCertificateOptions>,
   ): DelegationCertificate {
-    if (value instanceof DelegationCertificateOptions) {
+    if (typeof value !== 'function') {
       return new DelegationCertificate(this.commandPrefix, value);
     }
 

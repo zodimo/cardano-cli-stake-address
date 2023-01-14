@@ -10,7 +10,7 @@ export class DeregistrationCertificateOptions implements CommandOptions {
   withStakeComponent(
     value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>,
   ): DeregistrationCertificateOptions {
-    if (value instanceof StakeComponent) {
+    if (typeof value !== 'function') {
       this.stakeComponent = value;
       return this;
     }
@@ -22,7 +22,7 @@ export class DeregistrationCertificateOptions implements CommandOptions {
   withOutFile(builder: Builder<OutFileBuilder, OutFile>): DeregistrationCertificateOptions;
   withOutFile(value: OutFile): DeregistrationCertificateOptions;
   withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): DeregistrationCertificateOptions {
-    if (value instanceof OutFile) {
+    if (typeof value !== 'function') {
       this.outFile = value;
       return this;
     }
