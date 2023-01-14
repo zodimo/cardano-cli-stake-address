@@ -17,7 +17,7 @@ export class BuildOptions implements CommandOptions {
   withStakeComponent(builder: Builder<StakeComponentBuilder, StakeComponent>): BuildOptions;
   withStakeComponent(value: StakeComponent): BuildOptions;
   withStakeComponent(value: StakeComponent | Builder<StakeComponentBuilder, StakeComponent>): BuildOptions {
-    if (value instanceof StakeComponent) {
+    if (typeof value !== 'function') {
       this.stakeComponent = value;
       return this;
     }
@@ -29,7 +29,7 @@ export class BuildOptions implements CommandOptions {
   withNetwork(builder: Builder<NetworkBuilder, Network>): BuildOptions;
   withNetwork(value: Network): BuildOptions;
   withNetwork(value: Network | Builder<NetworkBuilder, Network>): BuildOptions {
-    if (value instanceof Network) {
+    if (typeof value !== 'function') {
       this.network = value;
       return this;
     }
@@ -41,7 +41,7 @@ export class BuildOptions implements CommandOptions {
   withOutFile(builder: Builder<OutFileBuilder, OutFile>): BuildOptions;
   withOutFile(value: OutFile): BuildOptions;
   withOutFile(value: OutFile | Builder<OutFileBuilder, OutFile>): BuildOptions {
-    if (value instanceof OutFile) {
+    if (typeof value !== 'function') {
       this.outFile = value;
       return this;
     }
